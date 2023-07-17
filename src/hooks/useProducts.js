@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Api } from "../api/Api";
+import Api from "../api/Api";
 
 export const useProducts = () => {
     const [isLoadingProducts, setIsLoadingProducts] = useState(false);
@@ -10,7 +10,8 @@ export const useProducts = () => {
         const categoryURL = category ? `/category/${category}` : '';
         try {
             setIsLoadingProducts(true);
-            const response = await Api(`https://fakestoreapi.com/products${categoryURL}`);
+            setProducts([]);
+            const response = await Api.get(`https://fakestoreapi.com/products${categoryURL}`);
             setProducts(response);
         } catch (error) {
             setProductsErorr(error);

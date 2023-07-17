@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Api } from "../api/Api";
+import Api from "../api/Api";
 
 export const useCategories = () => {
     const [isLoadingCategories, setIsLoadingCategories] = useState(false);
@@ -9,7 +9,7 @@ export const useCategories = () => {
     const handleFetchCategories = async () => {
         try {
             setIsLoadingCategories(true);
-            const response = await Api('https://fakestoreapi.com/products/categories');
+            const response = await Api.get('https://fakestoreapi.com/products/categories');
             setCategories(response);
         } catch (error) {
             setCategoriesErorr(error);

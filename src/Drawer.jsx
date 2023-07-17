@@ -2,7 +2,7 @@ import { Box, Divider, Drawer, List, ListItem, ListItemButton, ListItemText, Too
 import { useCategories } from "./hooks/useCategories";
 import { useEffect } from "react";
 
-export const DrawerWrapper = ({ window, drawerWidth, mobileOpen, handleDrawerToggle, changeCategory }) => {
+export const DrawerWrapper = ({ window, selectedCategory, drawerWidth, mobileOpen, handleDrawerToggle, changeCategory }) => {
 
     const { handleFetchCategories, categories } = useCategories();
     useEffect(() => {
@@ -29,7 +29,7 @@ export const DrawerWrapper = ({ window, drawerWidth, mobileOpen, handleDrawerTog
                     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                 }}
             >
-                <DrawerElements changeCategory={changeCategory} categories={categories} />
+                <DrawerElements changeCategory={changeCategory} selectedCategory={selectedCategory} categories={categories} />
             </Drawer>
             <Drawer
                 variant="permanent"
@@ -39,24 +39,24 @@ export const DrawerWrapper = ({ window, drawerWidth, mobileOpen, handleDrawerTog
                 }}
                 open
             >
-                <DrawerElements changeCategory={changeCategory} categories={categories} />
+                <DrawerElements changeCategory={changeCategory} selectedCategory={selectedCategory} categories={categories} />
             </Drawer>
         </Box>
     )
 }
 
-const DrawerElements = ({ changeCategory, categories }) => (
+const DrawerElements = ({ changeCategory, categories, selectedCategory }) => (
     <div>
         <Toolbar />
         <Divider />
         <List>
-            <ListItem disablePadding>
+            <ListItem disablePadding sx={{background: selectedCategory === '' ? '#80808033': 'transparent'}}>
                 <ListItemButton onClick={() => changeCategory('')}>
                     <ListItemText primary={'All Categories'} />
                 </ListItemButton>
             </ListItem>
             {categories.map((text, index) => (
-                <ListItem key={text} disablePadding>
+                <ListItem key={text} disablePadding sx={{paddingLeft: 4, background: selectedCategory === text ? '#80808033': 'transparent'}}>
                     <ListItemButton onClick={() => changeCategory(text)}>
                         <ListItemText primary={text.charAt(0).toUpperCase() + text.slice(1)} />
                     </ListItemButton>
